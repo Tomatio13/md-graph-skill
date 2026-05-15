@@ -1,0 +1,3 @@
+display_name: Repo GraphRAG
+short_description: Build graph storage, query repositories, and generate implementation plans from repository graphs.
+default_prompt: Analyze this repository with Repo GraphRAG.
