@@ -26,6 +26,12 @@ def build_parser() -> argparse.ArgumentParser:
     create_parser = subparsers.add_parser("create", help="Create or update graph storage")
     create_parser.add_argument("--target-repo-path", required=True)
     create_parser.add_argument("--storage-name", required=True)
+    create_parser.add_argument(
+        "--markdown-chunk-heading-level",
+        type=int,
+        choices=(2, 3),
+        help="Max Markdown heading level used for section chunking in this storage",
+    )
 
     query_parser = subparsers.add_parser("query", help="Query existing graph storage")
     query_parser.add_argument("--storage-name", required=True)
@@ -38,7 +44,11 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-async def run_create(target_repo_path: str, storage_name: str) -> int:
+async def run_create(
+    target_repo_path: str,
+    storage_name: str,
+    markdown_chunk_heading_level: int | None = None,
+) -> int:
     target_repo = Path(target_repo_path).expanduser().resolve()
     if not target_repo.exists():
         print(f"Target repository path does not exist: {target_repo}", file=sys.stderr)
@@ -48,6 +58,7 @@ async def run_create(target_repo_path: str, storage_name: str) -> int:
         read_dir_path=str(target_repo),
         storage_name=storage_name,
         base_dir=str(ROOT),
+        markdown_chunk_heading_level=markdown_chunk_heading_level,
     )
     print(result)
     return 0 if not result.startswith("An error occurred:") else 1
@@ -78,7 +89,11 @@ async def async_main() -> int:
     args = parser.parse_args()
 
     if args.mode == "create":
-        return await run_create(args.target_repo_path, args.storage_name)
+        return await run_create(
+            args.target_repo_path,
+            args.storage_name,
+            args.markdown_chunk_heading_level,
+        )
     if args.mode == "query":
         return await run_query(args.storage_name, args.user_request)
     if args.mode == "plan":

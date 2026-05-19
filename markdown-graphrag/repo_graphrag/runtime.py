@@ -93,6 +93,7 @@ async def create_graph_storage_entrypoint(
     read_dir_path: str,
     storage_name: str = "storage",
     base_dir: str | None = None,
+    markdown_chunk_heading_level: int | None = None,
 ) -> str:
     runtime_base_dir = base_dir or os.getcwd()
     logger = configure_logging(runtime_base_dir)
@@ -107,7 +108,11 @@ async def create_graph_storage_entrypoint(
         storage_exists = os.path.exists(storage_dir_path)
         action = "updated" if storage_exists else "created"
 
-        await deps["create_graph_storage"](read_dir_path, storage_dir_path)
+        await deps["create_graph_storage"](
+            read_dir_path,
+            storage_dir_path,
+            markdown_chunk_heading_level=markdown_chunk_heading_level,
+        )
 
         result_message = GRAPH_STORAGE_RESULT_TEMPLATE.format(
             read_dir_path=read_dir_path,

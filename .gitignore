@@ -1,0 +1,23 @@
+.env
+.venv/
+.python-version
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Local agent state
+.serena/
+
+# Logs
+logs/
+*.log
+
+# Generated GraphRAG storages
+storage/
+storage*/
+*_work/
+kv_store_*.json
+vdb_*.json
+graph_chunk_entity_relation.graphml

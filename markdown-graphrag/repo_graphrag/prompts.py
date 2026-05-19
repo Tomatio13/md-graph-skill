@@ -11,40 +11,20 @@ Create an accurate and error-free plan assuming that other LLMs/agents will exec
 Rewrite the modification request into an "implementation plan" to be handed off to other LLMs/agents.
 Include the following steps in the plan:
 - Preparation
-    1. Identify file paths of code to be newly created or modified
-    2. Identify file paths of documents to be newly created or modified
-    3. Investigate dependencies and impact range
+    1. Identify file paths of documents to be newly created or modified
+    2. Investigate dependencies and impact range
 - Design
 - Implementation
     1. Create/modify documents
-    2. Create/modify code
 
 # Rules
 Always include the following:
-- Always include the paths of target documents and code files to be modified.
-- Documents and code are a set. If either documents or code is newly created or modified, update both to avoid inconsistencies.
+- Always include the paths of target documents to be modified.
 - Perform the minimum changes necessary to fulfill the requested requirements.
 
 # Modification Request:
 {user_request}
 """
-
-# ========================================
-# Prompt for code summarization
-# ========================================
-
-CODE_SUMMARY_PROMPT_TEMPLATE = """# Instructions
-Extract the important elements and processes from the program and create a brief summary statement described in natural language.
-
-# Rules
-- Create a summary statement using natural language, not the program.
-- Output only a pure summary without any supplements or questions.
-
-# Program
-{node_text}
-
-# Summary statement"""
-
 
 # ========================================
 # Response message templates
@@ -53,7 +33,7 @@ Extract the important elements and processes from the program and create a brief
 PLAN_RESPONSE_TEMPLATE = """
 # Task
 An implementation plan has been created by referencing the storage based on the modification request.
-Present the plan content to the user in an easy-to-understand manner, and ask for their decision on whether to autonomously execute document and code updates based on this plan.
+Present the plan content to the user in an easy-to-understand manner, and ask for their decision on whether to autonomously execute documentation updates based on this plan.
 If there are ambiguous or unclear parts in the plan, refer to the sample follow-up questions and continue the repository analysis flow.
 
 Modification Request:
@@ -63,9 +43,9 @@ Implementation Plan:
 {plan}
 
 # Sample Follow-up Questions
-- Tell me what the function does using storage `{storage_name}`
-- I want to know the class names in the file using storage `{storage_name}`
-- Please explain the processing flow of the following part using storage `{storage_name}`
+- Summarize the main documented sections using storage `{storage_name}`
+- Explain what this section says using storage `{storage_name}`
+- Find the documentation that mentions the following topic using storage `{storage_name}`
     
 # Note
 In the following cases, the storage referenced for planning may not include the current implementation and may be outdated.
@@ -86,9 +66,9 @@ Answer:
 {response}
 
 # Sample Follow-up Questions
-- Tell me what the function does using storage `{storage_name}`
-- I want to know the class names in the file using storage `{storage_name}`
-- Please explain the processing flow of the following part using storage `{storage_name}`
+- Summarize the main documented sections using storage `{storage_name}`
+- Explain what this section says using storage `{storage_name}`
+- Find the documentation that mentions the following topic using storage `{storage_name}`
 
 # Note
 In the following cases, the storage referenced for the answer may not include the current implementation and may be outdated.
