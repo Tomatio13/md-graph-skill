@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "repo-graphrag-skill"
 version = "0.1.0"
-description = "Standalone Agent Skill bundle for Repo GraphRAG."
+description = "Standalone Agent Skill bundle for Markdown-focused GraphRAG."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -22,20 +22,6 @@ dependencies = [
     "faiss-cpu==1.12.0",
     "transformers==5.0.0",
     "python-dotenv==1.1.1",
-    "tree-sitter>=0.25.2",
-    "tree-sitter-python>=0.25.0",
-    "tree-sitter-cpp>=0.23.4",
-    "tree-sitter-java>=0.23.5",
-    "tree-sitter-kotlin>=1.1.0",
-    "tree-sitter-javascript>=0.25.0",
-    "tree-sitter-typescript>=0.23.2",
-    "tree-sitter-rust>=0.24.0",
-    "tree-sitter-c>=0.24.1",
-    "tree-sitter-c-sharp>=0.23.1",
-    "tree-sitter-go>=0.25.0",
-    "tree-sitter-ruby>=0.23.1",
-    "tree-sitter-html>=0.23.2",
-    "tree-sitter-css>=0.23.2",
 ]
 
 [tool.hatch.build.targets.wheel]

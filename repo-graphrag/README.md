@@ -1,1 +1,0 @@
-# repo-graphrag-skill
